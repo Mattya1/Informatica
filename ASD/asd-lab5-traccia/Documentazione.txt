@@ -1,0 +1,6 @@
+Spiegazione:
+n Dictionary è un array statico di dimensione tableDim di puntatori a cell (a cui diamo il nome "Bucket")
+
+ogni bucket è fatto da elem (Key key; Value value) e next, che punta al bucket successivo
+
+le cell sono collegate tra loro semplicemente

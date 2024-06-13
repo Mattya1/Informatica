@@ -1,0 +1,27 @@
+ALLOCAZIONE DINAMICA DELLA MEMORIA
+
+come allocare memoria su heap e rilasciaela quando non serve più:
+
+per allocare la memoria di un float */new float nomefloat/*
+
+Per non allocare memoria a cui non si può accedere (sprecandola), quando si usa new bisogna sempre associare la memoria che si sta riservando ad un puntatore. Es:
+
+– dichiarazione di puntatore con inizializzazione a una nuova area di memoria:
+ T* p = new T;
+nel caso T sia float avremo 		float* p = new float;
+nel caso T sia int avremo			int* p = new int;
+
+– assegnazione di una nuova area di memoria ad un puntatore già dichiarato:
+T* p; p = new T;
+
+nel caso T sia float avremo		 float* p; p = new float;
+nel caso T sia int avremo		 int* p; p = new int;
+
+
+USARE VALGRIND
+1- compilare g++ -Wall -std=c++14 -g nomefile.cpp
+2- eseguire valgrind --leak-check=full --track-origins=yes -s ./nomefileCOMPILATO
+
+
+
+

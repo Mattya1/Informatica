@@ -1,0 +1,1 @@
+ho problemi con le funzioni removeEl e set, non capisco il problema

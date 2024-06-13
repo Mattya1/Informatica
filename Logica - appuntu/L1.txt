@@ -1,0 +1,35 @@
+Logica 
+
+3 argomenti principali: 
+-logica proposizionale
+-logica del ptim'ordine
+-formalizzazioni
+
+la logica è:
+
+- lo studio del ragionamento
+- sinonimo di linguaggio formale
+
+strategie per creare una dimostrazione:
+
+1) dimostrazione diretta:
+
+  "Se P1 e P2 e .. Pn = Q"
+  
+utilizzo "Se -> Allora" 
+
+es:
+P1 : n è un numero dispari
+P2 : m è un numero pari
+
+tesi: Q: n+m è un numero intero dispari
+Le assunzioni significano che: esiste un numero intero l tale che
+n = 2l + 1 ed esiste un numero intero k tale che m = 2k. Allora
+n + m = (2l + 1) + 2k =
+= (2l + 2k) + 1 =
+= 2(l + k) + 1
+Quindi n + m `e dispari, perch´e `e della forma n + m = 2j + 1 per qualche
+numero intero j
+
+
+

@@ -1,0 +1,3 @@
+/*Scrivere una funzione con un parametro n di tipo intero che stampa un rombo di asterischi che sulla diagonale ha 2*n+1
+caratteri. Ad esempio, dato 8 stampa (rombo) che sulla diagonale ha 17 caratteri */
+

@@ -1,0 +1,35 @@
+int partition (vector<int>& v, int l, int r) 	//l e r indicano left e right
+{
+	cout << "\n l:"<< l << " r:" << r<< endl;
+
+	if (l==r){  //caso base, grandezza 1
+		return l;
+	}
+
+	int piv_ind = v[l];  //pivot primo elemento
+	int i=l+1;
+
+	cout << "\n partition"; 
+
+	for (int j=i; j; ++j)   
+	{
+		if (v[j] < piv_ind){    //qua comparo l' con gli altri elementi
+			swap_ind(v, v[j], v[i]); //swappo l'elemento j
+			i=i+1;
+		}
+
+	}
+
+	swap_ind(v, v[l], v[i-1]);
+	
+	cout<< "\n ind=";
+	
+	cout << "\nqs tra left e piv ind -1";
+	qs (v, l, piv_ind-1);
+
+	cout << "\nqs tra piv ind +1 e right";
+	qs (v, piv_ind+1, v[r]);
+
+	cout << "/n end";
+
+};
