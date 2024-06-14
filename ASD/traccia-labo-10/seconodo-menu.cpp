@@ -122,7 +122,7 @@ void menu() {
                 cout << (makeMoreFriends(usr_Log, net) ? "User made more friends.\n" : "Failed to make more friends.\n");
                 break;
             case 'o':
-                print(net);
+                // print(net);
                 break;
             case 'p':
                 cout << "Enter first user login: ";
