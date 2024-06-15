@@ -511,7 +511,7 @@ list::List friends(string usr_Log, const Network &net)
         std::cerr << "Eccezione di lunghezza: " << e.what() <<std::endl;
     }    
     
-    // addInOrder(aux->userPtr->name, ls);
+    // // addInOrder(aux->userPtr->name, ls);
     aux = aux->nextUser;
   }
 
