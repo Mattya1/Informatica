@@ -1,0 +1,92 @@
+.data
+	arr: .word 0 -1
+	arr1: .word 1 -1
+	arr2: .word 0 0 2 0 0 -1
+	arr3: .word 0 3 0 0 3 0 3 0 -1
+	arr4: .word 4 4 0 0 0 0 0 -1
+	arr5: .word 5 5 5 0 0 0 5 5 5 -1
+	msg: .string " "
+	msg2: .string " \n"
+	
+	.macro print_str (%x)
+		li a7, 4
+		la a0, %x
+		ecall
+	.end_macro
+	
+	.macro print_int (%x)
+		li a7, 1
+		mv a0, %x
+		ecall
+	.end_macro
+.text
+
+	MAIN:
+	
+	# TEST
+	# la s4,arr
+	la s4,arr2
+	# la s4,arr2
+	# la s4,arr3
+	# la s4,arr4
+	# la s4,arr5
+	# ...
+	
+	#VERY_END:
+	addi t0, zero, -1			# t0 contiene -1
+	li t1, 0				# t1 contiene  1
+	
+	mv 
+	
+	LOOP:
+		slli t4, t1, 2			# calcolo l'offset t1*2^2 = i * 4
+		addi t1, t1, 1			# i ++
+		lw t2, 0(s4)			# carico v[i]
+		
+		print_int(t2)			# print v[i]
+		print_str (msg)
+		
+		beq t2, t0, end			# if v[i] == -1 end
+	
+		add s4, s4, t4			# V[i+1]
+			
+		bne t2, zero, LOOP		# if V[i] != 0 continuo il loop
+							# altrimenti rimuovo lo 0
+		lw  t2, 4(s4)
+							# e lo salvo in V[i]
+		sw s4, 0(t2)
+		j LOOP			
+	
+	end:
+	
+	la s4, arr2
+	li t1, 1
+	print_str(msg2)
+	j print
+	
+	stop:
+	li a7, 93
+	li a0, 0
+	ecall
+	
+	
+	print:
+	
+	slli t1, t1, 2			# calcolo l'offset 1*2^2 = 4
+	lw t2, 0(s4)			# carico v[i]
+	add s4, s4, t1			# V[i+1]
+	print_int(t2)			# print v[i]
+	print_str (msg)
+	
+	beq t2, t0, stop			# if v[i] == -1 end
+	j print
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
