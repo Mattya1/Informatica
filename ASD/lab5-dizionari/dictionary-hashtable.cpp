@@ -138,7 +138,7 @@ Error dict::insertElem(const Key k, const Value v,  Dictionary &s)
       return FAIL;      //quindi se lo cerca ed è già inserito dà fail
    }
    // cout << "dopo";   
-   int index = (h(k)); //calcolo l'indice dell'array
+   int index = h(k); //calcolo l'indice dell'array
 
    //ora aggiungo l'elemento
    cell* newCell = new cell;
@@ -154,7 +154,7 @@ Error dict::insertElem(const Key k, const Value v,  Dictionary &s)
 /****************************************************************/
 Dictionary dict::createEmptyDict()
 {
-   Bucket* d = new Bucket[tableDim];
+   Dictionary d = new Dictionary[tableDim];
    for (int i=0; i < tableDim; ++i)
       d[i]=emptyBucket;
    return d;
