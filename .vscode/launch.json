@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/matti/Documents/UNI/Informatica-2023-2024/ASD",
-      "program": "c:/Users/matti/Documents/UNI/Informatica-2023-2024/ASD/build/Debug/outDebug",
+      "cwd": "c:/Users/matti/Documents/UNI/Informatica/ASD/lab10-network",
+      "program": "c:/Users/matti/Documents/UNI/Informatica/ASD/lab10-network/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
