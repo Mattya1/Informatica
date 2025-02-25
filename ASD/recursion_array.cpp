@@ -2,30 +2,44 @@
 
 using namespace std;
 
-int sum_arr_rec(int* tab, unsigned int size)
+int sum_arr_aux2(int* tab, unsigned int beg, unsigned int end)
 {
-    cout << "sum_array_rec " << size <<endl;
-    if (size == 0)
+    cout << "Sum arr aux 2: " << beg << " " << end <<endl;
+    if (beg > end){
+        
         return 0;
-    else
-        return tab[size-1] + sum_arr_rec(tab, size-1);
+
+    } else if (beg == end){
+
+        return tab[beg];
+    
+    } else {
+
+        unsigned mid = beg+(mid+beg)/2;
+        return sum_arr_aux2(tab, beg, mid) + sum_arr_aux2(tab, mid+1, end);
+    }
+
+}
+
+int sum_arr_aux(int* tab, unsigned int beg, unsigned int end)
+{
+    if(beg>end){
+        return 0;
+    } else {
+        return tab[beg] + sum_arr_aux(tab, beg+1, end);
+    }
 }
 
 int sum_array(int* tab, unsigned int size)
 {
-    int count = 0;
-    for (unsigned int i = 0; i < size; i++)
-    {
-        count= count + tab[i];
-    }
-    return count;
+    return sum_arr_aux(tab, 0, size-1)
 }
 
 
 int main (void)
 {
     int tab[5]={2,3,6,7,9};
-    int sum = sum_arr_rec(tab, 5);
+    int sum = sum_arr_aux2(tab, 5);
     cout << "Risultato: " << sum << endl;
 
     return 0;
