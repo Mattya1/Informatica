@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../UNI/Fondamenti di Informatica/Esercizi"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"iostream": "cpp",
+			"random": "cpp",
+			"ostream": "cpp"
+		}
+	}
+}

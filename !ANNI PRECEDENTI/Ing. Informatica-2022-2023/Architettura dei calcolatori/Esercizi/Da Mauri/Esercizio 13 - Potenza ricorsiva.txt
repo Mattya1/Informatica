@@ -1,0 +1,49 @@
+# int pot(int m, int n){
+#      if (n>0)
+#         return m*pot(m,n-1);
+#      else
+#         return 1;
+# }
+# int main()
+# {
+#     int n, m;
+#     cin >> m >> n;
+#     cout << pot(m,n) << endl;
+#     return 0;
+# }
+
+.text
+.globl main
+
+# $a0 contiene m
+# $a1 contiene n
+     
+pot:    addi   $sp, $sp, -8      # Alloco lo stack
+        sw     $a1, 4($sp)       # Salvo n
+        sw     $ra, 0($sp)       # Salvo indirizzo
+        blez   $a1, else         # if n <= 0 go to else
+        addi   $a1, $a1, -1      # Calcolo n - 1
+        jal    pot               # Chiamo la funzione
+        mul    $v0, $v0, $a0     # Calcolo m*m
+        j      end
+
+else:   addi   $v0, $zero, 1     # return 1
+
+end:    lw     $a1, 4($sp)       # Ripristino n
+        lw     $ra, 0($sp)       # Ripristino indirizzo
+        addi   $sp, $sp, 8       # Dealloco lo stack
+        jr     $ra
+
+main:   li     $v0, 5            # Read int
+        syscall
+        move   $a0, $v0          # Salvo m in a0
+        li     $v0, 5            # Read int
+        syscall
+        move   $a1, $v0          # Salvo n in a1
+        addi   $sp, $sp, -4      # Alloco lo stack
+        sw     $ra, 0($sp)       # Salvo indirizzo di ritorno
+        jal    pot
+        lw     $ra, 0($sp)       # Ripristino l'indirizzo di ritorno
+        addi   $ra, $ra, 4       # Dealloco lo stack
+        move   $s0, $v0          # Salvo il risultato della chiamata in s0
+        jr     $ra

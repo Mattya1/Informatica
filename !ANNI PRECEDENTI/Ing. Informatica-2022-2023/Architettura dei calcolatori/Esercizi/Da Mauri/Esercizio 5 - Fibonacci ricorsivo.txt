@@ -1,0 +1,40 @@
+.text
+.globl main
+
+fib:       addi  $sp, $sp, -12     # alloco lo stack
+           sw    $s1, 8($sp)       # salvo risultato parziale
+           sw    $ra, 4($sp)       # salvo indirizzo di ritorno
+           sw    $a0, 0($sp)       # salvo n
+               
+if:        bgtz  $a0, elseif       # se n>0 go to else if
+           addi  $v0, $zero, 0     # return 0
+           j   end 
+
+elseif:    slti  $t0, $a0, 2       # t0 vale 1 se $a0 < 2
+           beq   $t0, $zero, else  # se t0 vale 0 salta a else
+           addi  $v0, $zero, 1     # return 1
+           j   end
+
+else:      addi  $a0, $a0, -1      # calcolo n-1
+           jal   fib               # chiamo la funzione con n-1
+           move  $s1, $v0          # salvo in t1 il risultato della funzione n-1
+           addi  $a0, $a0, -1      # calcolo n-2
+           jal   fib               # chiamo la funzione con n-2 
+           add   $v0, $v0, $s1     # return fib(n-1) + fib(n-2)
+
+end:       lw    $s1, 8($sp)       # ripristino risultato parziale
+           lw    $ra, 4($sp)       # ripristino indirizzo di ritorno
+           lw    $a0, 0($sp)       # ripristino n
+           addi  $sp, $sp, 12      # dealloco lo stack
+           jr    $ra               # esco dalla funzione
+           
+main:      addi  $a0, $zero, 12    # int n=4
+           addi  $sp, $sp, -4      # memorizzo indirizzo 
+           sw    $ra, 0($sp)       # di ritorno
+           jal   fib               # chiamo la funzione
+           lw    $ra, 0($sp)       # ripristino indirizzo
+           addi  $sp, $sp, 4       # di ritorno
+           move  $s1, $v0
+           jr    $ra
+           
+            

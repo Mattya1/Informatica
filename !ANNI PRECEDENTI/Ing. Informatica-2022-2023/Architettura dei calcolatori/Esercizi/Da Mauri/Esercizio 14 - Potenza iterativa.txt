@@ -1,0 +1,45 @@
+# int pot(int m, int n){
+#     int r;
+#     for (int i=0;i<=n;i++){
+#         if (i == 0)
+#             r = 1;
+#         else
+#             r = r * m;
+#      }
+#      return r;
+# }
+# int main()
+# {
+#     int n, m;
+#     cin >> m >> n;
+#     cout << pot(m,n) << endl;
+#     return 0;
+# }
+
+.text
+.globl main
+
+pot:       addi $t0, $zero, 0    # i = 0
+loop:      sub  $t1, $t0, $a1    # t1 = i - n
+           bgtz $t1, end         # if t1 > 0 go to end
+if:        bne  $t0, $zero, else # if i != 0 go to else
+           addi $v0, $zero, 1    # r = 1
+           j    increase
+else:      mul  $v0, $v0, $a0    # r = r * m
+increase:  addi $t0, $t0, 1      # i++
+           j    loop
+end:       jr   $ra
+  
+main:      li   $v0, 5            # Read int
+           syscall
+           move $a0, $v0          # Salvo m in a0
+           li   $v0, 5            # Read int
+           syscall
+           move $a1, $v0          # Salvo n in a1
+           addi $sp, $sp, -4      # Alloco lo stack
+           sw   $ra, 0($sp)       # Salvo l'indirizzo di ritorno
+           jal  pot           
+           lw   $ra, 0($sp)       # Ripristino l'indrizzo
+           addi $sp, $sp, 4       # Dealloco lo stack
+           move $s0, $v0          # Salvo il risultato di pot in s0
+           jr   $ra

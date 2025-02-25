@@ -1,0 +1,32 @@
+# calcolo del fattoriale
+
+.text
+.globl main
+
+fattoriale: add  $sp, $sp, -8     # alloco lo stack
+            sw   $a0, 4($sp)      # salvo n
+            sw   $ra, 0($sp)      # salvo indirizzo di ritorno
+
+if:         addi $t0, $a0, -1     # t0 = n - 1
+            beq  $t0, $zero, else # se n - 1 == 0 go to else
+            addi $a0, $a0, -1     # calcola n-1
+            jal  fattoriale       # chiamo f(n-1)
+            lw   $t1, 4($sp)      # Salvo n in t1
+            mul  $v0, $t1, $v0    # Calcolo il fattoriale
+            j    end
+
+else:       addi $v0, $zero, 1    # return 1
+
+end:        lw   $a0, 4($sp)      # recupero il valore di n
+            lw   $ra, 0($sp)      # ripristino ra
+            addi $sp, $sp, 8      # dealloco lo stack
+            jr   $ra
+            
+main:       addi $a0, $zero, 5    # n=5
+            addi $sp, $sp,-4      # alloco lo stack
+            sw   $ra, 0($sp)      # salvo ra
+            jal  fattoriale       # chiamo la funzione
+            lw   $ra, 0($sp)      # ripristino l'indirizzo di ritrno
+            addi $sp, $sp, 4      # dealloco lo stack
+            move $s0, $v0         # Salvo il valore di ritorno in s0
+            jr   $ra

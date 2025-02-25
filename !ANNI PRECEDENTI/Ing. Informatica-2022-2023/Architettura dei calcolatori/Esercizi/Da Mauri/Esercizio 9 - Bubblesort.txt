@@ -1,0 +1,86 @@
+# void bubblesort (int v[],int dim)
+# {
+#     int temp = 0;
+#     for (int i=dim-1;i>0;i--){
+#         for (int j=0;j<i;j++){
+#             if (v[j] > v[j+1]){
+#                 temp = v[j];
+#                 v[j] = v[j+1];
+#                 v[j+1] = temp;
+#             }
+#         }
+#     }
+# }
+# int main()
+# {
+#     int dim = 4;
+#     int v[dim];
+#     for (int i=0;i<dim;i++){
+#         cin >> v[i];
+#     }
+#     bubblesort(v,dim);
+#     for (int i=0;i<dim;i++)
+#         cout << v[i] << ", ";
+
+.text
+.globl main 
+
+bubblesort:  addi $t0, $zero, 4    # i = dim
+             
+
+loop1:       move $t1, $a1         # sposto a1 in t1   
+             beq  $t0, $zero, stop # if i = 0 go to stop
+             addi $t0, $t0, -1     # i--
+             addi $t2, $zero, 0    # j = 0
+             j    loop2
+
+loop2:       beq  $t2, $t0, loop1  # if j == i go to loop1
+             addi $t2, $t2, 1      # j++
+             lw   $t3, 0($t1)      # t3 = v[j]
+             lw   $t4, 4($t1)      # t4 = v[j+1]
+             addi $t1, $t1, 4      # Punto il valore successivo
+             slt  $t5, $t4, $t3    # t5 vale 1 se v[j+1] < v[j]
+             beq  $t5, 1, if       # se t5 vale 1 go to if
+             j    loop2
+
+if:          sw   $t4, -4($t1)     # v[j] = v[j+1] 
+             sw   $t3, 0($t1)      # v[j+1] = v[j]
+             j    loop2  
+
+stop:        jr   $ra
+             
+             
+
+main:        addi $a0, $zero, 4   # dim = 4
+             addi $t0, $zero, 0   # i = 0
+             la   $t1, v          # t1 contiene l'indirizzo di v
+             j    while
+end:         la   $a1, v          # Carico in a1 l'indirizzo di v
+             addi $sp, $sp, -4    # Salvo indirizzo
+             sw   $ra, 0($sp)     # di ritorno
+             jal  bubblesort
+             lw   $ra, 0($sp)     # Ripristino indirizzo
+             addi $sp, $sp, 4     # di ritorno
+             addi $t0, $zero, 0   # i = 0
+             move $s0, $a0        # sposto dim 
+             j    loop3
+end_p:       jr   $ra
+
+while:       beq  $t0, $a0, end   # if i == dim go to end
+             li   $v0, 5          # Read int
+             syscall              # chiamata a sistema
+             sw   $v0, 0($t1)     # scrivo il valore in v[i]
+             addi $t1, $t1, 4     # incremento il puntatore all'array
+             addi $t0, $t0, 1     # i++
+             j    while 
+
+loop3:       beq  $t0, $s0, end_p # if i == dim go to end
+             lw   $a0, 0($a1)     # carico v[i] in a0
+             li   $v0, 1          # print int
+             syscall              # chiamata a sistema
+             addi $a1, $a1, 4     # Vado al valore successivo
+             addi $t0, $t0, 1     # i++
+             j    loop3        
+
+.data
+v:    .word 0, 0, 0, 0

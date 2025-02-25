@@ -1,0 +1,13 @@
+.data
+   messaggio: .asciiz "ciaone! \n"		#messaggio della funzione
+
+.text
+
+  .globl main
+	main:
+		li $v0, 4				#inserisco il mio messaggio nel registro v0
+		la $a0, messaggio			#l'argomento di a0 è "messaggio"
+		
+		syscall				#fa finire l'esecuzione
+		jr $ra				#"salta" all'indirizzo $ra
+ 

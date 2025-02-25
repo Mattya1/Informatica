@@ -1,0 +1,66 @@
+# int fib(int n)
+# {
+#      int f1;
+#      int f2;
+#      int ris = 0;
+#      for(int i=0;i<=n;i++){
+#         if (i == 0){
+#             ris = 0;
+#             f1 = 0;
+#         }
+#         if (i == 1){
+#             ris = 1;
+#             f2 = 1;
+#         }
+#         else if(i > 1){
+#              ris=f1+f2;
+#              f1 = f2;   // f1 = f(n-2)
+#              f2 = ris;  // f2 = f(n-1)
+#         }
+#      }
+#      return ris;
+# }
+# int main()
+# {
+#    int n;
+#    cin >> n;
+#    cout << fib(n) << endl;
+#    return 0;
+# }
+
+.text
+.globl main
+
+fib:       addi $t0, $zero, 0       # i = 0
+loop:      beq  $t0, $a0, end       # if i == n go to end
+_if:       bne  $t0, $zero, if      # if i != 0
+           addi $v0, $zero, 0       # ris = 0
+           addi $t1, $zero, 0       # f1 = 0
+           j    inc
+if:        addi $t3, $t0, -1        # t3 = i-1
+           bne  $t3, $zero, else_if # if i-1 != 0 go to else_if
+           addi $v0, $zero, 1       # ris = 1
+           addi $t2, $zero, 1       # f2 = 1
+           j    inc
+else_if:   slti $t4, $t0, 2         # t4 = 1 if i <= 1
+           bne  $t4, $zero, loop    # if i <= 1 go to loop  
+           add  $v0, $t1, $t2       # ris = f1 + f2
+           add  $t1, $zero, $t2     # f1 = f2
+           add  $t2, $zero, $v0     # f2 = ris
+inc:       addi $t0, $t0, 1         # i++
+           j    loop
+end:       jr   $ra                 # esci dalla funzione
+
+main:      li   $v0, 5              # read int
+           syscall
+           move $s0, $v0            # salvo n in s0
+           move $a0, $s0            # copio n in a0
+           addi $sp, $sp, -4        # alloco lo stack
+           sw   $ra, 0($sp)         # salvo l'indirizzo di ritorno
+           jal  fib
+           lw   $ra, 0($sp)         # ripristino indirizzo
+           addi $sp, $sp, 4         # dealloco lo stack
+           move $a0, $v0            # sposto in a0 il risultato della funzione  
+           li   $v0, 1              # print int
+           syscall
+           jr   $ra

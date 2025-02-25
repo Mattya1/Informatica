@@ -1,0 +1,50 @@
+.text
+.globl main
+
+
+main:  la   $t0, valore   # scrivo l'indirizzo di valore in t0
+       la   $a0, string1  # Carico in a0 l'indirizzo di string1
+
+       li   $v0, 4        # Codice per stampare una stringa (contenuta in a0)
+       syscall            # Chiamata a sistema
+
+       li   $v0, 5        # carico il codice 5 per leggere intero
+       syscall            # Chiamata a sistema
+       sw   $v0, 0($t0)   # Scrivo il valore letto nella prima posizione
+
+       li   $v0, 4        # Codice per stampare una stringa (contenuta in a0)
+       syscall            # Chiamata a sistema
+
+       li   $v0, 5        # carico il codice 5 per leggere intero
+       syscall            # Chiamata a sistema
+       sw   $v0, 4($t0)   # Scrivo il valore letto nella seconda posizione
+
+       lw   $t1, 0($t0)   # Carico in t0 il primo valore
+       lw   $t2, 4($t0)   # Carico in t1 il secondo valore
+       add  $s0, $t1, $t2 # Sommo i due valori
+
+       la   $a0, string4  # Carico string4 in a0
+       li   $v0, 4        # Codice per stampare una stringa (contenuta in a0)
+       syscall            # Chiamata a sistema
+
+       li   $v0, 1        # Codice per stampare un intero (contenuto in a0)
+       move $a0, $s0      # sposto s0 in a0
+       syscall            # Chiamata a sistema
+
+       la   $a0, string2  # Carico in a0 la stringa da stampare
+       li   $v0, 4        # Codice per stampare una stringa (contenuta in a0)
+       syscall            # Chiamata a sistema
+ 
+       la   $a0, string3  # Carico in a0 la stringa da leggere
+       li   $v0, 8        # Codice per leggera la stringa (contenuta in a0 o a1)
+       syscall            # Chiamata a sistema       
+
+       jr   $ra
+
+
+.data
+valore:  .word 0, 0 
+string1: .asciiz "Inserire il valore: "  
+string2: .asciiz "\nInserire una stringa: "
+string3: .asciiz " "
+string4: .asciiz "La somma vale: "

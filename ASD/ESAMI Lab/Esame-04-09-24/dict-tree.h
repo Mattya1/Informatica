@@ -28,4 +28,4 @@ bool isPresent(std::string, const dictTree&);
 //Es 3
 //Ritorna la parola piu' piccola dell'albero
 //Se l'albero e' vuoto, ritorna la string vuota ""
-std::string minWord(const dictTree&);
+int minWord(const dictTree&);

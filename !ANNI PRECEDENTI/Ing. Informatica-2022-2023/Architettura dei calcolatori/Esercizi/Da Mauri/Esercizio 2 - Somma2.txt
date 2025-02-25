@@ -1,0 +1,16 @@
+.text
+.globl main
+
+main: la $t0, val2        # $t0 <-- indirizzo val2 
+      lw $t1, 0($t0)      # $t1 <-- val2
+      lw $t2, 4($t0)      # $t2 <-- val3
+      addu $t1, $t1, $t2  #$t1 <-- val2 + val3
+      jr $31
+.data
+val0: .word 10
+val1: .word 11
+val2: .word 12
+val3: .word 13
+val4: .word 14
+val5: .word 15
+      

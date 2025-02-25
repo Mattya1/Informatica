@@ -1,0 +1,66 @@
+# int operazione (int arr1[],int arr2[],int n)
+# {
+#     int i = 0;
+#     int somma = 0;
+#     if (n>0){
+#         while (i<n){
+#             somma+= (arr1[i] + arr2[i]);
+#             i++;
+#         }
+#         return somma;
+#     }
+#     else
+#         return 0;
+# }
+# int main()
+# {
+#     const int n=6;
+#     int array1[n] = {1,2,3,4,5,6};
+#     int array2[n] = {7,8,9,1,2,3};
+#     int risultato = 0;
+#     risultato = operazione(array1,array2,n);
+#     cout << risultato << endl;
+#     return 0;
+# }
+
+
+.text
+.globl main
+
+
+operazione: addi $t0, $zero, 0     # i = 0
+            addi $v0, $zero, 0     # somma = 0
+            blez $a0, else         # se n <= 0 go to else
+
+while:      slt  $t1, $t0, $a0     # t1 = 1 se i < n
+            beqz $t1, end          # se t1 = 0 go to end
+            lw   $t2, array1($t0)  # carico array1[i]
+            lw   $t3, array2($t0)  # carico array2[i]
+            add  $t4, $t2, $t3     # t4 = array1[i] + array2[i]
+            add  $v0, $v0, $t4     # somma += t4
+            addi $t0, $t0, 4       # i++
+            j    while
+                     
+else:       addi $v0, $zero, 0     # return 0
+
+end:        jr   $ra               # torna al main
+
+main:       addi $a0, $zero, 24    # n = 6;
+            la   $a1, array1       # carico indirizzo in a1 array1
+            la   $a2, array2       # carico indirizzo in a2 array2
+            addi $s0, $zero, 0     # risultato = 0
+            addi $sp, $sp, -4      # alloco lo stack
+            sw   $ra, 0($sp)       # salvo l'indirizzo di ritorno
+            jal  operazione        # eseguo la funzione
+            lw   $ra, 0($sp)       # ripristino dell'indirizzo
+            addi $sp, $sp, 4       # di ritorno
+            add  $s0, $s0, $v0     # risultato = operazione(...)
+            move $s1, $a0          # salvo n in s1
+            move $a0, $s0          # salvo in a0 il valore da stampare
+            li   $v0, 1            # carico in v0 il codice print_int
+            syscall                # chiamata a sistema
+            j    $ra
+
+.data
+array1: .word 1, 2, 3, 4, 5, 6
+array2: .word 7, 8, 9, 1, 2, 3   
